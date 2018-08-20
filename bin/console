@@ -1,0 +1,35 @@
+#!/usr/bin/env php
+<?php
+
+require_once "bootstrap.php";
+
+use Pimple\Container;
+use Symfony\Component\Console\Application as Console;
+
+class App extends Container
+{
+    private $console;
+
+    public function run()
+    {
+        $this->getConsole()->run();
+    }
+
+    public function getConsole(): Console
+    {
+        if (!isset($this['console'])) {
+            throw new RuntimeException('Console is not registered.');
+        }
+        return $this->console = isset($this['console']) ? $this['console'] : new Console();
+    }
+}
+
+
+$app = new App();
+$app->register(new \Abumostafa\TweetsNotify\Command\CommandsServiceProvider());
+$app->register(new \Abumostafa\TweetsNotify\Command\ConsoleServiceProvider(), [
+    'commands' => [
+        $app['tweets:fetch'],
+    ]
+]);
+$app->run();

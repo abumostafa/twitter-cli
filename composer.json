@@ -1,0 +1,15 @@
+{
+  "require": {
+    "symfony/console": "^4.1",
+    "symfony/dotenv": "^4.1",
+    "pimple/pimple": "^3.2"
+  },
+  "autoload": {
+    "files": [
+      "./src/Helper/functions.php"
+    ],
+    "psr-4": {
+      "Abumostafa\\TweetsNotify\\": "./src"
+    }
+  }
+}
